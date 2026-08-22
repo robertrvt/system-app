@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050914">
+
+    <title>SYSTEM</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top, #10294a 0%, #07101f 35%, #03060c 75%);
+            color: #eaf7ff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        .app {
+            max-width: 600px;
+            margin: auto;
+            padding: 30px 18px 60px;
+        }
+
+        .system-title {
+            text-align: center;
+            letter-spacing: 7px;
+            color: #7bdcff;
+            font-size: 30px;
+            margin-bottom: 6px;
+            text-shadow: 0 0 18px rgba(90, 200, 255, 0.6);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7f9db5;
+            font-size: 13px;
+            letter-spacing: 2px;
+            margin-bottom: 35px;
+        }
+
+        .card {
+            background: rgba(8, 18, 33, 0.88);
+            border: 1px solid rgba(87, 190, 255, 0.35);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 18px;
+            box-shadow: 0 0 30px rgba(0, 140, 255, 0.08);
+        }
+
+        .player-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .label {
+            color: #7897ac;
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        .level {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            margin-top: 4px;
+        }
+
+        .rank {
+            text-align: right;
+        }
+
+        .rank-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #63d4ff;
+        }
+
+        .xp-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 22px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #aac5d6;
+        }
+
+        .xp-bar {
+            width: 100%;
+            height: 11px;
+            background: #0d1724;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .xp-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #207cff, #67e8ff);
+            border-radius: 20px;
+            transition: width 0.4s ease;
+        }
+
+        .section-title {
+            color: #69d7ff;
+            letter-spacing: 3px;
+            font-size: 15px;
+            margin-bottom: 17px;
+        }
+
+        .quest {
+            border-top: 1px solid rgba(100, 180, 220, 0.15);
+            padding: 16px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .quest:first-of-type {
+            border-top: none;
+        }
+
+        .quest-name {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .reward {
+            color: #77a9c3;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        button {
+            border: 1px solid #3a9ed0;
+            background: rgba(28, 111, 160, 0.16);
+            color: #8ee7ff;
+            border-radius: 9px;
+            padding: 10px 13px;
+            min-width: 92px;
+            min-height: 44px;
+            font-size: 14px;
+        }
+
+        button:active {
+            transform: scale(0.97);
+        }
+
+        button.completed {
+            border-color: #315363;
+            color: #64818f;
+            background: rgba(20, 36, 46, 0.5);
+        }
+
+        .status {
+            text-align: center;
+            color: #7394a7;
+            font-size: 13px;
+            margin-top: 15px;
+        }
+
+        .message {
+            display: none;
+            margin-bottom: 18px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #58cfff;
+            background: rgba(37, 147, 205, 0.12);
+            border-radius: 12px;
+            color: #9eeaff;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <h1 class="system-title">SYSTEM</h1>
+    <div class="subtitle">PLAYER INTERFACE</div>
+
+    <div id="message" class="message"></div>
+
+    <div class="card">
+
+        <div class="player-row">
+
+            <div>
+                <div class="label">PLAYER LEVEL</div>
+                <div id="level" class="level">LEVEL 1</div>
+            </div>
+
+            <div class="rank">
+                <div class="label">RANK</div>
+                <div id="rank" class="rank-value">E</div>
+            </div>
+
+        </div>
+
+        <div class="xp-text">
+            <span>EXPERIENCE</span>
+            <span id="xpText">0 / 100 XP</span>
+        </div>
+
+        <div class="xp-bar">
+            <div id="xpFill" class="xp-fill"></div>
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="section-title">DAILY QUESTS</div>
+
+        <div class="quest">
+            <div>
+                <div class="quest-name">Workout</div>
+                <div class="reward">+40 XP</div>
+            </div>
+
+            <button data-quest="workout" data-xp="40">
+                Complete
+            </button>
+        </div>
+
+
+        <div class="quest">
+            <div>
+                <div class="quest-name">Study 30 Minutes</div>
+                <div class="reward">+30 XP</div>
+            </div>
+
+            <button data-quest="study" data-xp="30">
+                Complete
+            </button>
+        </div>
+
+
+        <div class="quest">
+            <div>
+                <div class="quest-name">Read 10 Pages</div>
+                <div class="reward">+20 XP</div>
+            </div>
+
+            <button data-quest="read" data-xp="20">
+                Complete
+            </button>
+        </div>
+
+
+        <div class="quest">
+            <div>
+                <div class="quest-name">Daily Discipline</div>
+                <div class="reward">+25 XP</div>
+            </div>
+
+            <button data-quest="discipline" data-xp="25">
+                Complete
+            </button>
+        </div>
+
+        <div id="dailyStatus" class="status">
+            0 / 4 quests completed
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const STORAGE_KEY = "systemPlayerData";
+
+function today() {
+    const d = new Date();
+
+    return (
+        d.getFullYear() +
+        "-" +
+        String(d.getMonth() + 1).padStart(2, "0") +
+        "-" +
+        String(d.getDate()).padStart(2, "0")
+    );
+}
+
+
+let player = {
+    level: 1,
+    xp: 0,
+    date: today(),
+    completed: []
+};
+
+
+const savedData = localStorage.getItem(STORAGE_KEY);
+
+if (savedData) {
+    try {
+        player = JSON.parse(savedData);
+    } catch {
+        console.log("Could not load save data.");
+    }
+}
+
+
+/* Reset quests when a new day begins */
+
+if (player.date !== today()) {
+    player.date = today();
+    player.completed = [];
+    save();
+}
+
+
+function save() {
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(player)
+    );
+}
+
+
+function getRank(level) {
+
+    if (level >= 30) return "S";
+    if (level >= 25) return "A";
+    if (level >= 20) return "B";
+    if (level >= 15) return "C";
+    if (level >= 8) return "D";
+
+    return "E";
+}
+
+
+function showMessage(text) {
+
+    const message = document.getElementById("message");
+
+    message.textContent = text;
+    message.style.display = "block";
+
+    setTimeout(() => {
+        message.style.display = "none";
+    }, 2200);
+}
+
+
+function addXP(amount) {
+
+    player.xp += amount;
+
+    while (player.xp >= 100) {
+
+        player.xp -= 100;
+        player.level++;
+
+        showMessage(
+            "LEVEL UP — LEVEL " + player.level
+        );
+    }
+
+    save();
+    updateScreen();
+}
+
+
+function completeQuest(button) {
+
+    const quest = button.dataset.quest;
+    const xp = Number(button.dataset.xp);
+
+    if (player.completed.includes(quest)) {
+        return;
+    }
+
+    player.completed.push(quest);
+
+    save();
+
+    addXP(xp);
+
+    showMessage(
+        "QUEST COMPLETE  +" + xp + " XP"
+    );
+}
+
+
+function updateScreen() {
+
+    document.getElementById("level").textContent =
+        "LEVEL " + player.level;
+
+    document.getElementById("rank").textContent =
+        getRank(player.level);
+
+    document.getElementById("xpText").textContent =
+        player.xp + " / 100 XP";
+
+    document.getElementById("xpFill").style.width =
+        player.xp + "%";
+
+
+    const buttons = document.querySelectorAll(
+        "button[data-quest]"
+    );
+
+    buttons.forEach(button => {
+
+        const quest = button.dataset.quest;
+
+        if (player.completed.includes(quest)) {
+
+            button.textContent = "Completed";
+            button.classList.add("completed");
+            button.disabled = true;
+
+        } else {
+
+            button.textContent = "Complete";
+            button.classList.remove("completed");
+            button.disabled = false;
+        }
+
+    });
+
+
+    document.getElementById("dailyStatus").textContent =
+        player.completed.length +
+        " / " +
+        buttons.length +
+        " quests completed";
+}
+
+
+document.querySelectorAll(
+    "button[data-quest]"
+).forEach(button => {
+
+    button.addEventListener("click", () => {
+        completeQuest(button);
+    });
+
+});
+
+
+updateScreen();
+
+</script>
+
+</body>
+</html>
