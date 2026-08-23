@@ -1,0 +1,10 @@
+{
+  "name": "SYSTEM Habit Tracker",
+  "short_name": "SYSTEM",
+  "description": "A private-on-device RPG-style habit and quest tracker.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#03060c",
+  "theme_color": "#050914"
+}
